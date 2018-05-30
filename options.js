@@ -4,4 +4,4 @@ export default {
   thousands: ',',
   decimal: '.',
   precision: 2
-}
+};
