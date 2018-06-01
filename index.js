@@ -1,10 +1,7 @@
 import VMoney from './directive';
 import options from './options';
 
-export {
-  VMoney,
-  options
-};
+export { VMoney, options };
 
 function install(Vue, globalOptions) {
   if (globalOptions)

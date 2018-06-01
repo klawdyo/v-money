@@ -1,5 +1,3 @@
-import defaults from './options';
-
 function toStr(value) {
   return value ? value.toString() : '';
 }
@@ -30,44 +28,27 @@ function joinIntegerAndDecimal(integer, decimal, separator) {
   return decimal ? integer + separator + decimal : integer;
 }
 
-function format(input, opt = defaults) {
-  if (typeof input === 'number')
-    input = input.toFixed(fixed(opt.precision));
-
-  const negative = input.indexOf('-') >= 0 ? '-' : '';
-  const numbers = onlyNumbers(input);
+function format(input = 0, opt) {
+  const value = typeof input === 'number' ? input.toFixed(fixed(opt.precision)) : (input || '0');
+  const numbers = onlyNumbers(value);
   const currency = numbersToCurrency(numbers, opt.precision);
   const parts = toStr(currency).split('.');
-  let integer = parts[0];
-  const decimal = parts[1];
-  integer = addThousandSeparator(integer, opt.thousands);
-  return opt.prefix + negative + joinIntegerAndDecimal(integer, decimal, opt.decimal) + opt.suffix;
-}
-
-function unformat(input, precision) {
-  const negative = input.indexOf('-') >= 0 ? -1 : 1;
-  const numbers = onlyNumbers(input);
-  const currency = numbersToCurrency(numbers, precision);
-  return parseFloat(currency) * negative;
+  const [integerDirty, decimal] = parts;
+  const integer = addThousandSeparator(integerDirty, opt.thousands);
+  return [
+    opt.prefix,
+    joinIntegerAndDecimal(integer, decimal, opt.decimal)
+  ].join('');
 }
 
 function setCursor(el, position) {
-  const setSelectionRange = function setSelecRage() { el.setSelectionRange(position, position); };
+  function setSelectionRange() {
+    el.setSelectionRange(position, position);
+  }
   if (el === document.activeElement) {
     setSelectionRange();
     setTimeout(setSelectionRange, 1); // Android Fix
   }
 }
 
-function event(name) {
-  const evt = document.createEvent('Event');
-  evt.initEvent(name, true, true);
-  return evt;
-}
-
-export {
-  format,
-  unformat,
-  setCursor,
-  event
-};
+export { format, setCursor };
