@@ -1,109 +1,53 @@
-# v-money Mask for Vue.js
 
-![The Mask Money](https://cdn-images-1.medium.com/max/600/1*Rpc289FpghuHrnzyVpOUig.gif)
+# Máscara para REAL (R$) feita para Vuetify
 
 ## Features
 
-- Lightweight (<2KB gzipped)
-- Dependency free
-- Mobile support
-- Component or Directive flavors
-- Accept copy/paste
-- Editable
+- Funciona tanto para v-text-field quanto input
 
-For other types of mask, use [vue-the-mask](https://vuejs-tips.github.io/vue-the-mask)
+- Extremamente leve
+  
 
 ## Usage
 
-### A. Globally
+  
+
+### Instalação
+
+  
+
+Faça download e cole dentro do seu projeto (aceito ajuda para adicionar ao npm)
+
+  
 
 ```js
-import Vue from 'vue'
-import money from 'v-money'
 
-// register directive v-money and component <money>
-Vue.use(money, {precision: 4})
+import money from  './<caminho-relativo>/v-money'
+
+// Registre a diretiva v-money
+Vue.use(money)
+
 ```
 
-### B. Use as component: https://jsfiddle.net/auom8st8/
+### Uso
 
 ```html
-<template>
-  <div>
-    <money v-model="price" v-bind="money"></money> {{price}}
-  </div>
-</template>
-
-<script>
-  import {Money} from 'v-money'
-
-  export default {
-    components: {Money},
-
-    data () {
-      return {
-        price: 123.45,
-        money: {
-          decimal: ',',
-          thousands: '.',
-          prefix: 'R$ ',
-          suffix: ' #',
-          precision: 2,
-          masked: false
-        }
-      }
-    }
-  }
-</script>
+<input v-model="preco" v-money/>
+-ou-
+<v-text-field v-model="preco" v-money/> 
 ```
 
-### C. Use as directive: https://jsfiddle.net/nj3cLoum/2/
-Must use `vmodel.lazy` to bind works properly.
-```html
-<template>
-  <div>
-    <input v-model.lazy="price" v-money="money" /> {{price}}
-  </div>
-</template>
+  
 
-<script>
-  import {VMoney} from 'v-money'
+## Propriedades
 
-  export default {
-    data () {
-      return {
-        price: 123.45,
-        money: {
-          decimal: ',',
-          thousands: '.',
-          prefix: 'R$ ',
-          suffix: ' #',
-          precision: 2,
-          masked: false /* doesn't work with directive */
-        }
-      }
-    },
+- O sufixo é R$
+- Duas casas decimais para os centavos
+- Ponto ( . ) separando os milhares
+- Exemplo: R$ 47.210,55
+  
 
-    directives: {money: VMoney}
-  }
-</script>
-```
+## Thanks to:
 
-## Properties
-
-| property  | Required | Type    | Default | Description                                             |
-|-----------|----------|---------|---------|---------------------------------------------------------|
-| precision | **true** | Number  | 2       | How many decimal places                                 |
-| decimal   | false    | String  | "."     | Decimal separator                                       |
-| thousands | false    | String  | ","     | Thousands separator                                     |
-| prefix    | false    | String  | ""      | Currency symbol followed by a Space, like "R$ "         |
-| suffix    | false    | String  | ""      | Percentage for example: " %"                            |
-| masked    | false    | Boolean | false   | If the component output should include the mask or not  |
-
-### References
-
-- https://en.wikipedia.org/wiki/Decimal_mark
-- https://docs.oracle.com/cd/E19455-01/806-0169/overview-9/index.html
-- http://www.xe.com/symbols.php
-- https://github.com/kevinongko/vue-numeric
-- https://github.com/plentz/jquery-maskmoney
+- https://github.com/vuejs-tips/v-money
+- https://github.com/lmarqs/v-money
