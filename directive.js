@@ -1,11 +1,11 @@
 import { format, setCursor } from './utils';
 import opt from './options';
 
-function run(el, eventName) {
+function run(el, eventName, config) {
   let positionFromEnd = el.value.length - el.selectionEnd;
-  el.value = format(el.value, opt);
+  el.value = format(el.value, config);
   positionFromEnd = el.value.length - positionFromEnd;
-  positionFromEnd = Math.max(positionFromEnd, opt.prefix.length + 1); // left
+  positionFromEnd = Math.max(positionFromEnd, config.prefix.length + 1); // left
   setCursor(el, positionFromEnd);
   el.dispatchEvent(new Event(eventName));
 }
@@ -37,7 +37,7 @@ function componentUpdated(el, binding, vnode, oldVnode) {
 
   el = getInput(el);
   el.value = vnode.data.props ? vnode.data.props.value : el.value;
-  run(el, 'input');
+  run(el, 'input', getConfig(binding));
 }
 
-export default { bind, componentUpdated };
+export default { componentUpdated };
