@@ -25,7 +25,7 @@ function getConfig(binding) {
   const config = opt;
   if (binding.value && binding.value.precision) {
     const precision = binding.value.precision;
-    if (typeof precision === 'number' && precision > 0 && precision < 6)
+    if (typeof precision === 'number' && precision > 0 && precision < 6 && precision === parseInt(precision, 10))
       config.precision = precision;
   }
   return config;
