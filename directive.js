@@ -22,7 +22,7 @@ function getInput(el) {
 }
 
 function getConfig(binding) {
-  const config = opt;
+  const config = Object.assign( {}, opt, binding.value );
   if (binding.value && binding.value.precision) {
     const precision = binding.value.precision;
     if (typeof precision === 'number' && precision > 0 && precision < 6 && precision === parseInt(precision, 10))
